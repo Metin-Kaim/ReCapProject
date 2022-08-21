@@ -46,6 +46,10 @@ namespace ConsoleUI
                 Console.WriteLine(car.CarId + "  " + car.BrandId + "  " + car.ColorId);
             }
             #endregion
+
+            Console.WriteLine("-------GetById------");
+
+            Console.WriteLine("Brand Id: "+carManager.GetById(3).BrandId);
         }
     }
 }

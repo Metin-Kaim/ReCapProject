@@ -42,7 +42,7 @@ namespace DataAccess.Concrete
 
         public Car GetById(int id)
         {
-           return (Car)_cars.Where(c=>c.CarId==id);
+           return (Car)_cars.Find(c=>c.CarId==id);
         }
 
         public void Update(Car car)
