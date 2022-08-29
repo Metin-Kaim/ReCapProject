@@ -1,5 +1,5 @@
 ﻿using Business.Concrete;
-using DataAccess.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 
@@ -9,47 +9,25 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            foreach (var entity in carManager.GetCarsByBrandId(2))
             {
-                Console.WriteLine(car.CarId + "  " + car.BrandId + "  " + car.ColorId);
+                Console.WriteLine("car id: {0} - brand id: {1} ", entity.CarId, entity.BrandId);
             }
 
-            #region Add_Function
-            carManager.Add(new Car
-            {
-                CarId = 6,
-                BrandId = 3,
-                ColorId = 2,
-                DailyPrice = 2000,
-                ModelYear = "2022",
-                Description = "Nice!!"
-            });
+            Console.WriteLine();
 
-            Console.WriteLine("-------Add------");
-
-            foreach (var car in carManager.GetAll())
+            foreach (var entity in carManager.GetCarsByColorId(3))
             {
-                Console.WriteLine(car.CarId + "  " + car.BrandId + "  " + car.ColorId);
+                Console.WriteLine("car id: {0} - color id: {1} ", entity.CarId, entity.ColorId);
             }
-            #endregion
 
-            #region Delete_Function
+            Console.WriteLine();
 
-            Console.WriteLine("-------Delete------");
+            Car car = carManager.GetById(3);
 
-            carManager.Delete(new Car { CarId = 1 });
-
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine(car.CarId + "  " + car.BrandId + "  " + car.ColorId);
-            }
-            #endregion
-
-            Console.WriteLine("-------GetById------");
-
-            Console.WriteLine("Brand Id: "+carManager.GetById(3).BrandId);
+            Console.WriteLine("car id: {0} - color id: {1} ", car.CarId, car.ColorId);
         }
     }
 }
