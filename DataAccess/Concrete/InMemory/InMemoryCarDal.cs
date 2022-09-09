@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+using Entities.DTOs;
 
-namespace DataAccess.Concrete
+namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryCarDal : ICarDal
     {
@@ -54,6 +55,11 @@ namespace DataAccess.Concrete
         public Car GetById(int id)
         {
            return (Car)_cars.Find(c=>c.CarId==id);
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)

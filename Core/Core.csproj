@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
+    <None Remove="DataAccess\EntityFramework\EfEntityRepositoryBase.cs~RFe88807c.TMP" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    class ReCapProject_DB_Context : DbContext
+    public class ReCapProject_DB_Context : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -16,5 +16,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Car> Cars { get; set; }
         public DbSet<Brand> Brands{ get; set; }
         public DbSet<Color> Colors { get; set; }
+
     }
 }
