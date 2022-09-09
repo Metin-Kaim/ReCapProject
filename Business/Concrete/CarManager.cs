@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Entities.DTOs;
+using Core.Utilities.Results;
 
 namespace Business.Concrete
 {
@@ -17,47 +18,54 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.Description.Length >= 2 && car.DailyPrice > 0)
-                _carDal.Add(car);
-            else
-                Console.WriteLine("Araba Eklenemedi.");
+            if (car.Description.Length < 2 && car.DailyPrice <= 0) //error
+                return new ErrorResult("Ekleme işlemi başarısız.");
+
+            _carDal.Add(car);
+            return new SuccessResult("Ekleme işlemi gerçekleşti.");
+
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult("Silme işlemi gerçekleşti.");
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(p => p.CarId == id);
+            return new SuccessDataResult<Car>(_carDal.Get(p => p.CarId == id));
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id));
         }
 
-        public List<CarDetailDto> GetCarsDetails()
+        public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
+            if (DateTime.Now.Hour == 23)//23-24
+                return new ErrorResult("23.00 ile 24.00 arasında sistem bakıma alındığı için güncelleme yapamazsınız.");
+
             _carDal.Update(car);
+            return new SuccessResult("Güncelleme işlemi gerçekleşti.");
         }
     }
 }
